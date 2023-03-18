@@ -1,0 +1,22 @@
+{
+  "name": "helmtest",
+  "version": "1.0.0",
+  "description": "Write unit tests against your helm charts using JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rophy/helmtest.git"
+  },
+  "author": "Rophy Tsai <rophy@users.noreply.github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rophy/helmtest/issues"
+  },
+  "homepage": "https://github.com/rophy/helmtest#readme",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
