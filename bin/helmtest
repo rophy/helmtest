@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const jest = require('jest');
+const path = require('path');
+
+jest.run([
+  '--testMatch',
+  '**/*.js',
+  '--projects',
+  __dirname,
+  '--roots',
+  path.join(process.cwd(), 'tests'),
+]);
