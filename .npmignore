@@ -1,2 +1,4 @@
 exampleChart/
 .eslintrc*
+tests/
+.vscode/
