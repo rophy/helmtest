@@ -2,7 +2,8 @@
 
 const jest = require('jest');
 const path = require('path');
-
+const helmtest = require('../lib/helmtest');
+globalThis.helmtest = helmtest;
 jest.run([
   '--testMatch',
   '**/*.js',
