@@ -4,7 +4,7 @@
   "description": "Write unit tests against your helm charts using JavaScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest tests"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rophy/helmtest#readme",
   "dependencies": {
+    "jest": "^29.5.0",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
