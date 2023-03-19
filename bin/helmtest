@@ -1,9 +1,23 @@
 #!/usr/bin/env node
 
-const jest = require('jest');
 const path = require('path');
 const helmtest = require('../lib/helmtest');
+
+let jest;
+
+try {
+  jest = require('jest');
+} catch (err) {
+  if (err.code == 'MODULE_NOT_FOUND') {
+    console.error(`ERROR: ${err.message}`);
+    // eslint-disable-next-line max-len
+    console.error('jest is required when running helmtest as CLI. Install it by `npm install [-g] jest`');
+    process.exit(1);
+  }
+}
+
 globalThis.helmtest = helmtest;
+
 jest.run([
   '--testMatch',
   '**/*.js',
