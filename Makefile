@@ -7,4 +7,7 @@ test: 	## Run unit tests.
 	docker run -t --rm -e DEBUG=helmtest -v `pwd`:/workspace rophy/helmtest
 
 build:  ## Build docker image.
-	docker build -t helmtest .
+	docker build -t rophy/helmtest .
+
+dev:	## Create a dev container shell
+	docker run -it --rm -e DEBUG=helmtest -v `pwd`:/workspace rophy/helmtest bash
