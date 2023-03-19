@@ -74,15 +74,15 @@ helmtest currently only expose one method: `helmtest.renderTemplate(options)`.
 
 `options` is a object with option names, descriptions and defaults as below:
 
-| Option               | Description                                                                         | Default                                           |
-| -------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------- |
-| chartDir             | Path to chart, the `CHART` arg in helm CLI: `helm template [NAME] [CHART] [flags]`. | `'.'`                                             |
-| releaseName          | Release name, the `NAME` arg in helm CLI: `helm template [NAME] [CHART] [flags]`.   | `'release-name'`                                  |
-| values               | A map of chart values to set.                                                       | `{}`                                              |
-| valuesFiles          | A list of paths to additional values.yaml.                                          | `[]`                                              |
-| extraHelmArgs        | A list of extra args to pass to helm CLI, e.g. `--timeout=5s`                       | `[]`                                              |
-| helmBinary           | Path to helm binary.                                                                | `process.env.HELM_BINARY || 'helm'`               |
-| loadYaml             | if `false`, will return rendered template as raw string instead of js object.       | `true`                                            |
-| kubeconformEnabled   | if `true`, will pass rendered template to kubeconform CLI to validate schema.       | `process.env.KUBECONFORM_ENABLED || false`        |
-| kubeconformBinary    | Path to kubeconform binary.                                                         | `process.env.KUBECONFORM_BINARY || 'kubeconform'` |
-| kubeconformExtraArgs | A list of extra args to pass to kubeconform CLI.                                    | `process.env.KUBECONFORM_ARGS || []`              |
+| Option               | Description                                                                         | Default                                             |
+| -------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------- |
+| chartDir             | Path to chart, the `CHART` arg in helm CLI: `helm template [NAME] [CHART] [flags]`. | `'.'`                                               |
+| releaseName          | Release name, the `NAME` arg in helm CLI: `helm template [NAME] [CHART] [flags]`.   | `'release-name'`                                    |
+| values               | Map of chart values to set.                                                         | `{}`                                                |
+| valuesFiles          | Paths to additional values.yaml.                                                    | `[]`                                                |
+| extraHelmArgs        | Extra args to pass to helm CLI, e.g. `--timeout=5s`                                 | `[]`                                                |
+| helmBinary           | Path to helm binary.                                                                | `process.env.HELM_BINARY \|\| 'helm'`               |
+| loadYaml             | if `false`, will return rendered template as raw string instead of js object.       | `true`                                              |
+| kubeconformEnabled   | if `true`, will pass rendered template to kubeconform CLI to validate schema.       | `process.env.KUBECONFORM_ENABLED \|\| false`        |
+| kubeconformBinary    | Path to kubeconform binary.                                                         | `process.env.KUBECONFORM_BINARY \|\| 'kubeconform'` |
+| kubeconformArgs      | Args to pass to kubeconform CLI. Will append `process.env.KUBECONFORM_EXTRA_ARGS`.  | `['-strict','-ignore-missing-schemas','-summary']`  |
