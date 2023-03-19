@@ -19,4 +19,51 @@ Differences with [Stono/helmtest](https://github.com/Stono/helm-test):
 
 ## Getting Started
 
-See [example](../../tree/example) as an example helm chart project which includes unit tests.
+### Running helmtest as npm module
+
+Install helmtest:
+
+```bash
+npm install @rophy123/helmtest
+```
+
+To use helmtest in your code:
+
+```javascript
+const helmtest = require('@rophy123/helmtest');
+
+// Run `helm template` under working directory
+helmtest.renderTemplate()
+.then(results => {
+  // results are JS objects converted from result YAML.
+  // '[{"apiVesrion":"v1","kind":"ServiceAccount","metadata":...
+  console.log(JSON.stringify(results));
+});
+```
+
+The results object can be used to verify details. For example, in jest:
+
+```javascript
+const helmtest = require('@rophy123/helmtest');
+
+test('exmapleChart should render 4 resources', async () => {
+  const result = await helmtest.renderTemplate();
+  expect(result.length).toBe(4);
+});
+```
+
+See [helmtest.js](lib/helmtest.js) for the options of `helmtest.renderTemplate()`.
+
+### Running helmtest as CLI
+
+Install [jest](https://jestjs.io/) along with helmtest globally:
+
+```bash
+npm install -g @rophy123/helmtest jest
+```
+
+...and then you can write unit tests under `tests/` dir of your chart project without the need for package.json
+
+A docker image [rophy/helmtest](https://hub.docker.com/r/rophy/helmtest) is avilable which includes everything to run up unit tests.
+
+See [example](../../tree/example) as an example helm chart project on how to use docker image and write unit tests.
