@@ -80,9 +80,10 @@ helmtest currently only expose one method: `helmtest.renderTemplate(options)`.
 | releaseName          | Release name, the `NAME` arg in helm CLI: `helm template [NAME] [CHART] [flags]`.   | `'release-name'`                                    |
 | values               | Map of chart values to set.                                                         | `{}`                                                |
 | valuesFiles          | Paths to additional values.yaml.                                                    | `[]`                                                |
+| templateFiles        | Render only listed template files, e.g. `['templates/hpa.yaml']`                    | `[]`                                                |
 | extraHelmArgs        | Extra args to pass to helm CLI, e.g. `--timeout=5s`                                 | `[]`                                                |
 | helmBinary           | Path to helm binary.                                                                | `process.env.HELM_BINARY \|\| 'helm'`               |
 | loadYaml             | if `false`, will return rendered template as raw string instead of js object.       | `true`                                              |
 | kubeconformEnabled   | if `true`, will pass rendered template to kubeconform CLI to validate schema.       | `process.env.KUBECONFORM_ENABLED \|\| false`        |
 | kubeconformBinary    | Path to kubeconform binary.                                                         | `process.env.KUBECONFORM_BINARY \|\| 'kubeconform'` |
-| kubeconformArgs      | Args to pass to kubeconform CLI. Will append `process.env.KUBECONFORM_EXTRA_ARGS`.  | `['-strict','-ignore-missing-schemas','-summary']`  |
+| kubeconformArgs      | Args to pass to kubeconform CLI. Will append `process.env.KUBECONFORM_EXTRA_ARGS`.  | `['-strict','-summary']`                            |
