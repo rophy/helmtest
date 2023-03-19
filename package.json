@@ -1,6 +1,6 @@
 {
   "name": "@rophy123/helmtest",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Write unit tests against your helm charts using JavaScript.",
   "main": "index.js",
   "bin": {
