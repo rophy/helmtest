@@ -52,7 +52,7 @@ test('exmapleChart should render 4 resources', async () => {
 });
 ```
 
-See [helmtest.js](lib/helmtest.js) for the options of `helmtest.renderTemplate()`.
+See [API Spec](#api-spec) for the options of `helmtest.renderTemplate()`.
 
 ### Running helmtest as CLI
 
@@ -67,3 +67,22 @@ npm install -g @rophy123/helmtest jest
 A docker image [rophy/helmtest](https://hub.docker.com/r/rophy/helmtest) is avilable which includes everything to run up unit tests.
 
 See [example](../../tree/example) as an example helm chart project on how to use docker image and write unit tests.
+
+## API Spec
+
+helmtest currently only expose one method: `helmtest.renderTemplate(options)`.
+
+`options` is a object with option names, descriptions and defaults as below:
+
+| Option               | Description                                                                         | Default                                           |
+| -------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------- |
+| chartDir             | Path to chart, the `CHART` arg in helm CLI: `helm template [NAME] [CHART] [flags]`. | `'.'`                                             |
+| releaseName          | Release name, the `NAME` arg in helm CLI: `helm template [NAME] [CHART] [flags]`.   | `'release-name'`                                  |
+| values               | A map of chart values to set.                                                       | `{}`                                              |
+| valuesFiles          | A list of paths to additional values.yaml.                                          | `[]`                                              |
+| extraHelmArgs        | A list of extra args to pass to helm CLI, e.g. `--timeout=5s`                       | `[]`                                              |
+| helmBinary           | Path to helm binary.                                                                | `process.env.HELM_BINARY || 'helm'`               |
+| loadYaml             | if `false`, will return rendered template as raw string instead of js object.       | `true`                                            |
+| kubeconformEnabled   | if `true`, will pass rendered template to kubeconform CLI to validate schema.       | `process.env.KUBECONFORM_ENABLED || false`        |
+| kubeconformBinary    | Path to kubeconform binary.                                                         | `process.env.KUBECONFORM_BINARY || 'kubeconform'` |
+| kubeconformExtraArgs | A list of extra args to pass to kubeconform CLI.                                    | `process.env.KUBECONFORM_ARGS || []`              |
