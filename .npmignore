@@ -2,3 +2,5 @@ exampleChart/
 .eslintrc*
 tests/
 .vscode/
+Dockerfile
+.dockerignore
