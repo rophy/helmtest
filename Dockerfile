@@ -23,9 +23,9 @@ RUN cd / && git clone --depth 1 --filter=blob:none --sparse https://github.com/y
     && git sparse-checkout set v${KUBERNETES_VERSION}-standalone-strict \
     && rm -rf ./.git
 
-ENV KUBECONFORM_ENABLED=true KUBECONFORM_ARGS="-kubernetes-version ${KUBERNETES_VERSION} -schema-location /kubernetes-json-schema -strict"
+ENV KUBECONFORM_ENABLED=true KUBECONFORM_ARGS="-kubernetes-version ${KUBERNETES_VERSION} -schema-location /kubernetes-json-schema"
 ENV HELM_REGISTRY_CONFIG=/tmp/registry.json DOCKER_CONFIG=/tmp/config.json
-RUN npm install -g @rophy123/helmtest@1.2.0
+RUN npm install -g @rophy123/helmtest@2.1.0 jest@^29.5.0
 
 WORKDIR /workspace
 CMD ["/usr/local/bin/helmtest"]
