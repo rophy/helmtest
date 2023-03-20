@@ -4,6 +4,17 @@ const {format: prettyFormat} = require('pretty-format');
 const helmtest = require('../lib/helmtest');
 
 describe('helmtest', () => {
+  const env = process.env;
+
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = { ...env };
+  });
+
+  afterEach(() => {
+    process.env = env;
+  })
+
   test('default params', async () => {
     const result = await helmtest.renderTemplate({chartDir: 'exampleChart'});
     expect(result.length).toBe(4);
@@ -140,6 +151,11 @@ describe('helmtest', () => {
     .rejects.toMatchObject({
       code: 'ENOENT',
     });
+    process.env.HELM_BINARY = 'non-exist';
+    await expect(helmtest.renderTemplate())
+    .rejects.toMatchObject({
+      code: 'ENOENT',
+    });
   });
 
   test('loadYaml', async () => {
@@ -150,6 +166,31 @@ describe('helmtest', () => {
 
     expect(typeof result).toBe('string');
     expect(result).toContain('nginx');
+  });
+
+  test('kubeconform', async () => {
+    await expect(helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      kubeconformEnabled: true,
+      kubeconformBinary: 'non-exist'
+    })).rejects.toMatchObject({
+      code: 'ENOENT',
+    });
+    await expect(helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      kubeconformEnabled: false,
+      kubeconformBinary: 'non-exist'
+    }));
+    process.env.KUBECONFORM_ENABLED = 'true';
+    process.env.KUBECONFORM_BINARY = 'non-exist';
+    process.env.KUBECONFORM_EXTRA_ARGS = 'a b c';
+    await expect(helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      kubeconformArgs: ['hello'],
+    })).rejects.toMatchObject({
+      code: 'ENOENT',
+      spawnargs: [ 'hello', 'a', 'b', 'c' ]
+    });
   });
   
 });
