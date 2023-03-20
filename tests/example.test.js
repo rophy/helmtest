@@ -141,5 +141,15 @@ describe('helmtest', () => {
       code: 'ENOENT',
     });
   });
+
+  test('loadYaml', async () => {
+    const result = await helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      loadYaml: false,
+    });
+
+    expect(typeof result).toBe('string');
+    expect(result).toContain('nginx');
+  });
   
 });
