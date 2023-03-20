@@ -1,3 +1,6 @@
+const path = require('path');
+const {format: prettyFormat} = require('pretty-format');
+
 const helmtest = require('../lib/helmtest');
 
 describe('helmtest', () => {
@@ -30,6 +33,81 @@ describe('helmtest', () => {
     });
   });
 
+  test('chartDir', async () => {
+    await expect(helmtest.renderTemplate({chartDir: 'non-exist'}))
+    .rejects.toMatchObject({
+      code: 'ENOENT'
+    });
+    await expect(helmtest.renderTemplate({chartDir: 'exampleChart'}));
+  });
+
+  test('releaseName', async () => {
+    const resultDefaults = await helmtest.renderTemplate({chartDir: 'exampleChart'});
+    expect(resultDefaults.length).toBe(4);
+    expect(resultDefaults[0]).toMatchObject({
+      kind: 'ServiceAccount',
+      metadata: {
+        name: 'release-name-exampleChart',
+        labels: {
+          'app.kubernetes.io/instance': 'release-name'
+        }
+      }
+    });
+    const resultCustomized = await helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      releaseName: 'hello-world',
+    });
+    expect(resultCustomized.length).toBe(4);
+    expect(resultCustomized[0]).toMatchObject({
+      kind: 'ServiceAccount',
+      metadata: {
+        name: 'hello-world-exampleChart',
+        labels: {
+          'app.kubernetes.io/instance': 'hello-world'
+        }
+      }
+    });
+  });
+
+  test('values', async () => {
+    const result = await helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      values: {
+        replicaCount: 2,
+        'ingress.enabled': true,
+        'ingress.className': 'hello'
+      }
+    });
+    expect(result.length).toBe(5);
+    expect(result[2]).toMatchObject({
+      kind: 'Deployment',
+      spec: {
+        replicas: 2
+      }
+    });
+    expect(result[3]).toMatchObject({
+      kind: 'Ingress',
+      spec: {
+        ingressClassName: 'hello',
+      }
+    });
+  });
+
+  test('valuesFiles', async () => {
+    const result = await helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      valuesFiles: [
+        path.join(__dirname, 'fixtures/values.yaml'),
+        path.join(__dirname, 'fixtures/values2.yaml'),
+      ]
+    });
+    expect(result.length).toBe(4);
+    expect(result).toHaveProperty('[2].spec.template.spec.containers[0].image', 'nginx:2.0');
+    expect(result).toHaveProperty('[2].spec.template.spec.containers[0].resources.limits.cpu', '500m');
+    expect(result).toHaveProperty('[2].spec.template.spec.containers[0].resources.requests.memory', '128Mi');
+    expect(result).toHaveProperty('[2].spec.template.spec.containers[0].resources.limits.memory', '512Mi');
+  });
+
   test('templateFiles', async () => {
     const result = await helmtest.renderTemplate({
       chartDir: 'exampleChart',
@@ -45,4 +123,23 @@ describe('helmtest', () => {
       },
     });
   });
+
+  test('extraHelmArgs', async () => {
+    const result = await helmtest.renderTemplate({
+      chartDir: 'exampleChart',
+      extraHelmArgs: ['--set', 'service.port=90', '--show-only=templates/service.yaml']
+    });
+    expect(result.length).toBe(1);
+    expect(result).toHaveProperty('[0].spec.ports[0].port', 90);
+  });
+
+  test('helmBinary', async () => {
+    await expect(helmtest.renderTemplate({
+      helmBinary: 'non-exist'
+    }))
+    .rejects.toMatchObject({
+      code: 'ENOENT',
+    });
+  });
+  
 });
