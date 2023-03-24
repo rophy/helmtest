@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const helmtest = require('../lib/helmtest');
 
 let jest;
 
@@ -16,8 +15,6 @@ try {
   }
 }
 
-globalThis.helmtest = helmtest;
-
 jest.run([
   '--testMatch',
   '**/*.js',
@@ -25,4 +22,6 @@ jest.run([
   __dirname,
   '--roots',
   path.join(process.cwd(), 'tests'),
+  '--setupFilesAfterEnv',
+  path.join(__dirname, '/setup.js')
 ]);
