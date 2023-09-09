@@ -1,6 +1,6 @@
-FROM node:18.17.1-bookworm-slim
+FROM node:18.17.1-alpine3.18
 
-RUN apt-get update && apt-get install -y curl git && apt-get clean
+RUN apk add --no-cache curl git bash
 
 RUN curl -sLo ./helm.tar.gz https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz \
     && tar -zxvf helm.tar.gz linux-amd64/helm \
