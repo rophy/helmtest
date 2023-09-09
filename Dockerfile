@@ -1,11 +1,6 @@
-FROM node:16.19.1-bullseye-slim
+FROM node:18.17.1-bookworm-slim
 
-RUN apt-get update && apt-get install -y curl git
-
-RUN curl -sLo ./helm.tar.gz https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz \
-    && tar -zxvf helm.tar.gz linux-amd64/helm \
-    --strip-components 1 && mv ./helm /usr/local/bin/ \
-    && rm ./helm.tar.gz
+RUN apt-get update && apt-get install -y curl git && apt-get clean
 
 RUN curl -sLo ./helm.tar.gz https://get.helm.sh/helm-v3.11.2-linux-amd64.tar.gz \
     && tar -zxvf helm.tar.gz linux-amd64/helm \
