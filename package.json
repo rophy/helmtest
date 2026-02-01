@@ -1,6 +1,6 @@
 {
   "name": "@rophy123/helmtest",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Write unit tests against your helm charts using JavaScript.",
   "main": "index.js",
   "bin": {
@@ -20,13 +20,13 @@
   },
   "homepage": "https://github.com/rophy/helmtest#readme",
   "dependencies": {
-    "debug": "^4.3.4",
+    "debug": "^4.4.0",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "eslint": "^8.36.0",
+    "eslint": "^8.57.0",
     "eslint-config-google": "^0.14.0",
-    "jest": "^29.5.0"
+    "jest": "^29.7.0"
   },
   "peerDependenciesMeta": {
     "jest": {
