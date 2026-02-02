@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  DOCKERHUB_REPO: ricklin/helmtest
+  DOCKERHUB_REPO: rophy/helmtest
 
 jobs:
   test:
