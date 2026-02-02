@@ -1,6 +1,7 @@
 FROM node:22-alpine3.21
 
-RUN apk add --no-cache curl git bash
+RUN apk upgrade --no-cache libcrypto3 libssl3 && \
+    apk add --no-cache curl git bash
 
 RUN curl -sLo ./helm.tar.gz https://get.helm.sh/helm-v3.20.0-linux-amd64.tar.gz \
     && tar -zxvf helm.tar.gz linux-amd64/helm \
