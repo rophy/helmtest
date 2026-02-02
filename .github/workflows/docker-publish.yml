@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  release:
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
@@ -32,10 +34,23 @@ jobs:
       - name: Run tests
         run: npm test
 
-  build-and-push:
+  docker-test:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t helmtest .
+
+      - name: Run example chart tests in Docker
+        run: docker run --rm -v ${{ github.workspace }}/exampleChart:/workspace helmtest
+
+  build-and-push:
+    needs: docker-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
     permissions:
       contents: read
       packages: write
