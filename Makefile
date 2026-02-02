@@ -1,4 +1,4 @@
-.PHONY: help test test-unit test-docker
+.PHONY: help test test-unit test-docker build dev
 
 help:	## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'

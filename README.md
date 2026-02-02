@@ -64,9 +64,13 @@ npm install -g @rophy123/helmtest jest
 
 ...and then you can write unit tests under `tests/` dir of your chart project without the need for package.json
 
-A docker image [rophy/helmtest](https://hub.docker.com/r/rophy/helmtest) is avilable which includes everything to run up unit tests.
+A docker image is available which includes everything to run unit tests:
 
-See [example](../../tree/example) as an example helm chart project on how to use docker image and write unit tests.
+```bash
+docker run -v $(pwd):/workspace ghcr.io/rophy/helmtest
+```
+
+See [exampleChart/tests](./exampleChart/tests) for example tests.
 
 ## API Spec
 
