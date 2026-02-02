@@ -42,5 +42,10 @@
   "directories": {
     "lib": "lib",
     "test": "tests"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.js"
+    ]
   }
 }

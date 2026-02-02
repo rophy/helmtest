@@ -1,6 +1,6 @@
 /**
  * Example tests for exampleChart using helmtest.
- * Run with: docker run -v $(pwd):/workspace rophy/helmtest
+ * Run with: docker run -v $(pwd):/workspace ghcr.io/rophy/helmtest
  */
 
 test('exampleChart should render 4 resources by default', async () => {
