@@ -21,7 +21,15 @@ RUN cd / && git clone --depth 1 --filter=blob:none --sparse https://github.com/y
 
 ENV KUBECONFORM_ENABLED=true KUBECONFORM_EXTRA_ARGS="-kubernetes-version ${KUBERNETES_VERSION} -schema-location /kubernetes-json-schema"
 ENV HELM_REGISTRY_CONFIG=/tmp/registry.json DOCKER_CONFIG=/tmp/config.json
-RUN npm install -g @rophy123/helmtest@2.1.6 jest@^29.7.0
 
+# Install helmtest from local source
+COPY package*.json /helmtest/
+RUN cd /helmtest && npm install --omit=dev
+COPY bin /helmtest/bin
+COPY lib /helmtest/lib
+COPY index.js /helmtest/
+RUN npm install -g /helmtest && npm install -g jest@^29.7.0
+
+ENV NODE_PATH=/usr/local/lib/node_modules
 WORKDIR /workspace
 CMD ["/usr/local/bin/helmtest"]
